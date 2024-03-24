@@ -27,8 +27,10 @@ func main() {
 			switch choice {
 			case 1:
 				currentAlgorithm = "FCFS"
+				processesList = nil
 			case 2:
 				currentAlgorithm = "SJF"
+				processesList = nil
 			default:
 				fmt.Println("Invalid choice!")
 			}

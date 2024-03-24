@@ -7,7 +7,8 @@ import (
 )
 
 func DisplayMenu(currentAlgorithm string) {
-	fmt.Println("\n\n=== CPU Scheduling Menu ===")
+
+	fmt.Println("\n=== CPU Scheduling Menu ===")
 	fmt.Println("\n1. Choose an algorithm   (Current:", currentAlgorithm, ")")
 	fmt.Println("2. Add a process")
 	fmt.Println("3. Delete a process")
@@ -17,22 +18,42 @@ func DisplayMenu(currentAlgorithm string) {
 	fmt.Print("Enter your choice: ")
 }
 
-// AddProcess adds a new process
+// AddProcess adds a new process or multiple processes
 func AddProcess(processes *[]models.Process, currentAlgorithm string) {
 	if currentAlgorithm == "None" {
 		fmt.Println("\n\n\033[1;31mPlease choose an algorithm first!\033[0m")
 		return
 	}
 
-	var newProcess models.Process
-	fmt.Print("Enter Arrival Time: ")
-	fmt.Scan(&newProcess.ArrivalTime)
-	fmt.Print("Enter Burst Time: ")
-	fmt.Scan(&newProcess.BurstTime)
-	newProcess.ID = len(*processes) + 1
+	var arrivalTimes, burstTimes []int
+	var numProcesses int
 
-	*processes = append(*processes, newProcess)
-	fmt.Println("\n\033[1;32mProcess added successfully!\033[0m")
+	fmt.Print("Enter number of processes: ")
+	fmt.Scan(&numProcesses)
+
+	arrivalTimes = make([]int, numProcesses)
+	burstTimes = make([]int, numProcesses)
+
+	fmt.Println("Enter arrival times separated by spaces:")
+	for i := 0; i < numProcesses; i++ {
+		fmt.Scan(&arrivalTimes[i])
+	}
+
+	fmt.Println("Enter burst times separated by spaces:")
+	for i := 0; i < numProcesses; i++ {
+		fmt.Scan(&burstTimes[i])
+	}
+
+	for i := 0; i < numProcesses; i++ {
+		newProcess := models.Process{
+			ID:          len(*processes) + 1,
+			ArrivalTime: arrivalTimes[i],
+			BurstTime:   burstTimes[i],
+		}
+		*processes = append(*processes, newProcess)
+	}
+
+	fmt.Println("\n\n\033[1;32mProcesses added successfully!\033[0m")
 }
 
 // DeleteProcess deletes a process by ID
