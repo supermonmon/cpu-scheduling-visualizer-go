@@ -6,22 +6,21 @@ import (
 	"fmt"
 )
 
-// DisplayMenu displays the main menu
 func DisplayMenu(currentAlgorithm string) {
-	fmt.Println("\nMenu")
-	fmt.Println("1. Choose an algorithm", currentAlgorithm)
+	fmt.Println("\n\n=== CPU Scheduling Menu ===")
+	fmt.Println("\n1. Choose an algorithm   (Current:", currentAlgorithm, ")")
 	fmt.Println("2. Add a process")
 	fmt.Println("3. Delete a process")
 	fmt.Println("4. View processes")
 	fmt.Println("5. Visualize")
-	fmt.Println("6. Exit")
+	fmt.Println("6. Exit\n")
 	fmt.Print("Enter your choice: ")
 }
 
 // AddProcess adds a new process
 func AddProcess(processes *[]models.Process, currentAlgorithm string) {
 	if currentAlgorithm == "None" {
-		fmt.Println("Please choose an algorithm first!")
+		fmt.Println("\n\n\033[1;31mPlease choose an algorithm first!\033[0m")
 		return
 	}
 
@@ -33,7 +32,7 @@ func AddProcess(processes *[]models.Process, currentAlgorithm string) {
 	newProcess.ID = len(*processes) + 1
 
 	*processes = append(*processes, newProcess)
-	fmt.Println("Process added successfully!")
+	fmt.Println("\n\033[1;32mProcess added successfully!\033[0m")
 }
 
 // DeleteProcess deletes a process by ID
