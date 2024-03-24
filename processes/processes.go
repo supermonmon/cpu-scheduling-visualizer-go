@@ -20,6 +20,7 @@ func DisplayMenu(currentAlgorithm string) {
 
 // AddProcess adds a new process or multiple processes
 func AddProcess(processes *[]models.Process, currentAlgorithm string) {
+
 	if currentAlgorithm == "None" {
 		fmt.Println("\n\n\033[1;31mPlease choose an algorithm first!\033[0m")
 		return
@@ -59,12 +60,12 @@ func AddProcess(processes *[]models.Process, currentAlgorithm string) {
 // DeleteProcess deletes a process by ID
 func DeleteProcess(processes *[]models.Process, currentAlgorithm string) {
 	if currentAlgorithm == "None" {
-		fmt.Println("Please choose an algorithm first!")
+		fmt.Println("\n\n\033[1;31mPlease choose an algorithm first!\033[0m")
 		return
 	}
 
 	if len(*processes) == 0 {
-		fmt.Println("No processes to delete!")
+		fmt.Println("\n\n\033[1;31mThere are no processes!\033[0m")
 		return
 	}
 
@@ -72,26 +73,33 @@ func DeleteProcess(processes *[]models.Process, currentAlgorithm string) {
 	DisplayProcesses(*processes)
 
 	var id int
-	fmt.Print("Enter Process ID to delete: ")
+	fmt.Print("\n\nEnter Process ID to delete: ")
 	fmt.Scan(&id)
 
 	found := false
 	for i, process := range *processes {
 		if process.ID == id {
 			*processes = append((*processes)[:i], (*processes)[i+1:]...)
-			fmt.Println("Process with ID", id, "deleted successfully!")
+			fmt.Println("\033[1;32mProcess with ID:\033[0m", id, "\033[1;32mdeleted successfully!\033[0m")
 			found = true
 			break
 		}
 	}
 
 	if !found {
-		fmt.Println("Process with ID", id, "not found!")
+		fmt.Println("\n\n\033[1;31mProcess With ID:\033[0m", id, "\033[1;31mcannot be found!\033[0m")
 	}
 }
 
 // DisplayProcesses displays all processes
 func DisplayProcesses(processes []models.Process) {
+
+	if len(processes) == 0 {
+		fmt.Println("\n\n\033[1;31mThere are no processes!\033[0m")
+		return
+	}
+
+	fmt.Println("\n\n")
 	fmt.Println("-----------------------------------------------------------------")
 	fmt.Println("| Process ID | Arrival Time | Burst Time | Completion Time |")
 	fmt.Println("-----------------------------------------------------------------")
@@ -109,7 +117,7 @@ const (
 
 func VisualizeOption(processesList []models.Process, currentAlgorithm string) {
 	if currentAlgorithm == "None" {
-		fmt.Println("Please choose an algorithm first!")
+		fmt.Println("\n\n\033[1;31mPlease choose an algorithm first!\033[0m")
 		return
 	}
 
