@@ -11,7 +11,7 @@ func main() {
 	currentAlgorithm := "None"
 
 	for {
-		processes.DisplayMenu(currentAlgorithm)
+		DisplayMenu()
 
 		var choice int
 		fmt.Scan(&choice)
