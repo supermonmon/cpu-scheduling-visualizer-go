@@ -28,7 +28,8 @@ func main() {
 			fmt.Println("Exiting...")
 			return
 		default:
-			fmt.Println("Invalid choice!")
+			fmt.Println("\nError: " + "\x1b[31mInvalid. Please try again!\x1b[0m")
+
 		}
 	}
 }

@@ -22,25 +22,27 @@ func FirstComeFirstServe() (*FCFSResult, error) {
 	fmt.Print("Enter number of processes: ")
 	_, err := fmt.Scan(&numProcesses)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("\x1b[31mFailed to read number of processes: %v\x1b[0m", err)
 	}
 
 	arrivalTimes = make([]int, numProcesses)
 	burstTimes = make([]int, numProcesses)
 
+	// Get arrival times from user
 	fmt.Print("Enter arrival times separated by spaces: ")
 	for i := 0; i < numProcesses; i++ {
 		_, err := fmt.Scan(&arrivalTimes[i])
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("\x1b[31mFailed to read arrival time for process %d: %v\x1b[0m", i+1, err)
 		}
 	}
 
+	// Get burst times from user
 	fmt.Print("Enter burst times separated by spaces: ")
 	for i := 0; i < numProcesses; i++ {
 		_, err := fmt.Scan(&burstTimes[i])
 		if err != nil {
-			return nil, err
+			return nil, fmt.Errorf("\x1b[31mFailed to read burst time for process %d: %v\x1b[0m", i+1, err)
 		}
 	}
 
