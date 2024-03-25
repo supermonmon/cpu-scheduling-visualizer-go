@@ -5,4 +5,6 @@ type Process struct {
 	ArrivalTime    int
 	BurstTime      int
 	CompletionTime int
+	TurnaroundTime int
+	WaitingTime    int
 }
