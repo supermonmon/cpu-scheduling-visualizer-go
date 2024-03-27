@@ -32,5 +32,5 @@ func main() {
 	}
 
 	// Call FCFS scheduling function
-	algorithms.SJF(processID, arrivalTime, burstTime)
+	algorithms.SRTF(processID, arrivalTime, burstTime)
 }
