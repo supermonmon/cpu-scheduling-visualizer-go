@@ -32,8 +32,11 @@ func main() {
 	}
 
 	fmt.Println("Process ID:", processID)
-	fmt.Println("Process ID:", priorityLevel)
+	fmt.Println("Arrival Time", arrivalTime)
+	fmt.Println("Burst Time:", burstTime)
+	fmt.Println("Priority Level:", priorityLevel)
 	fmt.Println("Time Quantum:", timeQuantum)
+
 	// Call FCFS scheduling function
 	algorithms.SRTF(processID, arrivalTime, burstTime)
 }
