@@ -25,12 +25,15 @@ func main() {
 	defer file.Close() // Close the file after processing data
 
 	// Process CSV data and extract information
-	processID, arrivalTime, burstTime, err := processes.ProcessCSVData(reader)
+	processID, arrivalTime, burstTime, priorityLevel, timeQuantum, err := processes.ProcessCSVData(reader)
 	if err != nil {
 		fmt.Println("Error processing CSV data:", err)
 		return
 	}
 
+	fmt.Println("Process ID:", processID)
+	fmt.Println("Process ID:", priorityLevel)
+	fmt.Println("Time Quantum:", timeQuantum)
 	// Call FCFS scheduling function
 	algorithms.SRTF(processID, arrivalTime, burstTime)
 }
