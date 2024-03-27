@@ -2,3 +2,7 @@ Process ID,Arrival Time,Burst Time
 P1,0,5
 P2,2,2
 P3,0,5
+P4,2,4
+P5,4,59
+P6,5,78
+P7,6,45
