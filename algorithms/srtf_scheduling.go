@@ -2,32 +2,25 @@ package algorithms
 
 import (
 	"fmt"
+	"os"
 )
 
 type processData struct {
 	pid         string
 	arrivalTime int
 	burstTime   int
+	remaining   int // Track remaining burst time
 	completed   bool
-}
-
-func allCompleted(data []processData) bool {
-	for _, process := range data {
-		if !process.completed {
-			return false
-		}
-	}
-	return true
 }
 
 // SRTF implements the Shortest Remaining Time First (SRTF) scheduling algorithm with preemptive execution
 func SRTF(processID []string, arrivalTime, burstTime []int) {
 	fmt.Println("SRTF Scheduling Results (Preemptive):")
 
-	// Create a data structure to store process information with burst time and completion flag
+	// Create a data structure to store process information with burst time, remaining burst time, and completion flag
 	processDataSlice := make([]processData, len(processID))
 	for i := range processID {
-		processDataSlice[i] = processData{processID[i], arrivalTime[i], burstTime[i], false}
+		processDataSlice[i] = processData{processID[i], arrivalTime[i], burstTime[i], burstTime[i], false}
 	}
 
 	// Initialize slices for waiting time, completion time, and turnaround time
@@ -38,12 +31,17 @@ func SRTF(processID []string, arrivalTime, burstTime []int) {
 	var currentTime int = 0    // Track current time
 	var completedProcesses int // Track number of completed processes
 
+	var prevPID string
+	var startTime int
+
+	var gantt []TimeSlice
+
 	for completedProcesses < len(processID) {
 		// Find the available process with the shortest remaining burst time
 		shortestJob := -1
 		for j := 0; j < len(processID); j++ {
 			if !processDataSlice[j].completed && processDataSlice[j].arrivalTime <= currentTime {
-				if shortestJob == -1 || processDataSlice[j].burstTime < processDataSlice[shortestJob].burstTime {
+				if shortestJob == -1 || processDataSlice[j].remaining < processDataSlice[shortestJob].remaining {
 					shortestJob = j
 				}
 			}
@@ -55,17 +53,34 @@ func SRTF(processID []string, arrivalTime, burstTime []int) {
 			continue
 		}
 
+		// Check if the process has changed
+		if prevPID != processDataSlice[shortestJob].pid {
+			if prevPID != "" {
+				// Update the stop time for the previous process in the Gantt chart
+				ganttSlice := TimeSlice{PID: prevPID, Start: startTime, Stop: currentTime}
+				gantt = append(gantt, ganttSlice)
+			}
+			// Update the start time and previous PID
+			prevPID = processDataSlice[shortestJob].pid
+			startTime = currentTime
+		}
+
 		// Execute the process for 1 unit of time
-		processDataSlice[shortestJob].burstTime--
+		processDataSlice[shortestJob].remaining--
 		currentTime++
 
 		// Check if the process is completed
-		if processDataSlice[shortestJob].burstTime == 0 {
+		if processDataSlice[shortestJob].remaining == 0 {
 			completedProcesses++
 			processDataSlice[shortestJob].completed = true
 			completionTime[shortestJob] = currentTime
 			turnAroundTime[shortestJob] = completionTime[shortestJob] - processDataSlice[shortestJob].arrivalTime
 			waitingTime[shortestJob] = turnAroundTime[shortestJob] - burstTime[shortestJob]
+
+			// Update the stop time for the completed process in the Gantt chart
+			ganttSlice := TimeSlice{PID: processDataSlice[shortestJob].pid, Start: startTime, Stop: currentTime}
+			gantt = append(gantt, ganttSlice)
+			prevPID = "" // Reset previous PID
 		}
 	}
 
@@ -89,4 +104,7 @@ func SRTF(processID []string, arrivalTime, burstTime []int) {
 	// Print average waiting time and turnaround time
 	fmt.Printf("Average Waiting Time: %.2f\n", avgWaitingTime)
 	fmt.Printf("Average Turnaround Time: %.2f\n", avgTurnAroundTime)
+
+	// Print Gantt chart using outputGantt function
+	outputGantt(os.Stdout, gantt)
 }
