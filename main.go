@@ -38,5 +38,7 @@ func main() {
 	fmt.Println("Time Quantum:", timeQuantum)
 
 	// Call FCFS scheduling function
-	algorithms.SRTF(processID, arrivalTime, burstTime)
+	//algorithms.SRTF(processID, arrivalTime, burstTime)
+	//algorithms.NPP(processID, arrivalTime, burstTime, priorityLevel)
+	algorithms.RR(processID, arrivalTime, burstTime, timeQuantum)
 }

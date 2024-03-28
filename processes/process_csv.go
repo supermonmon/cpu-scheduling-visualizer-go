@@ -17,7 +17,7 @@ func ProcessCSVData(reader *csv.Reader) ([]string, []int, []int, []int, int, err
 		return nil, nil, nil, nil, 0, fmt.Errorf("error reading CSV file: %v", err)
 	}
 
-	// Extract time quantum (assuming it's the last column)
+	// Extract time quantum
 	timeQuantumValue, err = strconv.Atoi(records[0][len(records[0])-1])
 	if err != nil {
 		return nil, nil, nil, nil, 0, fmt.Errorf("error converting time quantum (%s) to integer: %v", records[0][len(records[0])-1], err)

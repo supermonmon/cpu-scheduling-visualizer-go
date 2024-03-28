@@ -10,25 +10,25 @@ import (
 func FCFS(processID []string, arrivalTime, burstTime []int) {
 	fmt.Println("FCFS Scheduling Results:")
 
-	// Sort data based on arrival time (ascending order)
-	type processData struct {
+	type FCFSData struct {
 		pid         string
 		arrivalTime int
 		burstTime   int
 	}
-	processDataSlice := make([]processData, len(processID))
+
+	FCFSDataSlice := make([]FCFSData, len(processID))
 	for i := range processID {
-		processDataSlice[i] = processData{processID[i], arrivalTime[i], burstTime[i]}
+		FCFSDataSlice[i] = FCFSData{processID[i], arrivalTime[i], burstTime[i]}
 	}
-	sort.Slice(processDataSlice, func(i, j int) bool {
-		return processDataSlice[i].arrivalTime < processDataSlice[j].arrivalTime
+	sort.Slice(FCFSDataSlice, func(i, j int) bool {
+		return FCFSDataSlice[i].arrivalTime < FCFSDataSlice[j].arrivalTime
 	})
 
 	// Extract sorted data back to original slices
-	for i := range processDataSlice {
-		processID[i] = processDataSlice[i].pid
-		arrivalTime[i] = processDataSlice[i].arrivalTime
-		burstTime[i] = processDataSlice[i].burstTime
+	for i := range FCFSDataSlice {
+		processID[i] = FCFSDataSlice[i].pid
+		arrivalTime[i] = FCFSDataSlice[i].arrivalTime
+		burstTime[i] = FCFSDataSlice[i].burstTime
 	}
 
 	var waitingTime, completionTime, turnAroundTime []int

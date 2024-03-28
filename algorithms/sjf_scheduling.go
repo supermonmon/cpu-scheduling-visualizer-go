@@ -10,27 +10,27 @@ import (
 func SJF(processID []string, arrivalTime, burstTime []int) {
 	fmt.Println("SJF Scheduling Results (Non-preemptive):")
 
-	// Create a data structure to store process information with burst time
-	type processData struct {
+	type SJFData struct {
 		pid         string
 		arrivalTime int
 		burstTime   int
 	}
-	processDataSlice := make([]processData, len(processID))
+
+	SJFDataSlice := make([]SJFData, len(processID))
 	for i := range processID {
-		processDataSlice[i] = processData{processID[i], arrivalTime[i], burstTime[i]}
+		SJFDataSlice[i] = SJFData{processID[i], arrivalTime[i], burstTime[i]}
 	}
 
 	// Sort processes by arrival time (ascending)
-	sort.Slice(processDataSlice, func(i, j int) bool {
-		return processDataSlice[i].arrivalTime < processDataSlice[j].arrivalTime
+	sort.Slice(SJFDataSlice, func(i, j int) bool {
+		return SJFDataSlice[i].arrivalTime < SJFDataSlice[j].arrivalTime
 	})
 
 	// Extract sorted data back to original slices
-	for i := range processDataSlice {
-		processID[i] = processDataSlice[i].pid
-		arrivalTime[i] = processDataSlice[i].arrivalTime
-		burstTime[i] = processDataSlice[i].burstTime
+	for i := range SJFDataSlice {
+		processID[i] = SJFDataSlice[i].pid
+		arrivalTime[i] = SJFDataSlice[i].arrivalTime
+		burstTime[i] = SJFDataSlice[i].burstTime
 	}
 
 	var waitingTime, completionTime, turnAroundTime []int

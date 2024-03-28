@@ -5,22 +5,22 @@ import (
 	"os"
 )
 
-type processData struct {
-	pid         string
-	arrivalTime int
-	burstTime   int
-	remaining   int // Track remaining burst time
-	completed   bool
-}
-
 // SRTF implements the Shortest Remaining Time First (SRTF) scheduling algorithm with preemptive execution
 func SRTF(processID []string, arrivalTime, burstTime []int) {
 	fmt.Println("SRTF Scheduling Results (Preemptive):")
 
+	type SRTFData struct {
+		pid         string
+		arrivalTime int
+		burstTime   int
+		remaining   int
+		completed   bool
+	}
+
 	// Create a data structure to store process information with burst time, remaining burst time, and completion flag
-	processDataSlice := make([]processData, len(processID))
+	SRTFDataSlice := make([]SRTFData, len(processID))
 	for i := range processID {
-		processDataSlice[i] = processData{processID[i], arrivalTime[i], burstTime[i], burstTime[i], false}
+		SRTFDataSlice[i] = SRTFData{processID[i], arrivalTime[i], burstTime[i], burstTime[i], false}
 	}
 
 	// Initialize slices for waiting time, completion time, and turnaround time
@@ -40,8 +40,8 @@ func SRTF(processID []string, arrivalTime, burstTime []int) {
 		// Find the available process with the shortest remaining burst time
 		shortestJob := -1
 		for j := 0; j < len(processID); j++ {
-			if !processDataSlice[j].completed && processDataSlice[j].arrivalTime <= currentTime {
-				if shortestJob == -1 || processDataSlice[j].remaining < processDataSlice[shortestJob].remaining {
+			if !SRTFDataSlice[j].completed && SRTFDataSlice[j].arrivalTime <= currentTime {
+				if shortestJob == -1 || SRTFDataSlice[j].remaining < SRTFDataSlice[shortestJob].remaining {
 					shortestJob = j
 				}
 			}
@@ -54,31 +54,31 @@ func SRTF(processID []string, arrivalTime, burstTime []int) {
 		}
 
 		// Check if the process has changed
-		if prevPID != processDataSlice[shortestJob].pid {
+		if prevPID != SRTFDataSlice[shortestJob].pid {
 			if prevPID != "" {
 				// Update the stop time for the previous process in the Gantt chart
 				ganttSlice := TimeSlice{PID: prevPID, Start: startTime, Stop: currentTime}
 				gantt = append(gantt, ganttSlice)
 			}
 			// Update the start time and previous PID
-			prevPID = processDataSlice[shortestJob].pid
+			prevPID = SRTFDataSlice[shortestJob].pid
 			startTime = currentTime
 		}
 
 		// Execute the process for 1 unit of time
-		processDataSlice[shortestJob].remaining--
+		SRTFDataSlice[shortestJob].remaining--
 		currentTime++
 
 		// Check if the process is completed
-		if processDataSlice[shortestJob].remaining == 0 {
+		if SRTFDataSlice[shortestJob].remaining == 0 {
 			completedProcesses++
-			processDataSlice[shortestJob].completed = true
+			SRTFDataSlice[shortestJob].completed = true
 			completionTime[shortestJob] = currentTime
-			turnAroundTime[shortestJob] = completionTime[shortestJob] - processDataSlice[shortestJob].arrivalTime
+			turnAroundTime[shortestJob] = completionTime[shortestJob] - SRTFDataSlice[shortestJob].arrivalTime
 			waitingTime[shortestJob] = turnAroundTime[shortestJob] - burstTime[shortestJob]
 
 			// Update the stop time for the completed process in the Gantt chart
-			ganttSlice := TimeSlice{PID: processDataSlice[shortestJob].pid, Start: startTime, Stop: currentTime}
+			ganttSlice := TimeSlice{PID: SRTFDataSlice[shortestJob].pid, Start: startTime, Stop: currentTime}
 			gantt = append(gantt, ganttSlice)
 			prevPID = "" // Reset previous PID
 		}
