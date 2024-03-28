@@ -2,6 +2,7 @@ package algorithms
 
 import (
 	"fmt"
+	"os"
 )
 
 func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) {
@@ -21,6 +22,9 @@ func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) {
 	// Initialize remainingTime array with burstTime
 	copy(remainingTime, burstTime)
 
+	// Initialize Gantt chart slices
+	var gantt []TimeSlice
+
 	// Iterate until all processes are completed
 	for totalCompleted < totalProcesses {
 		// Iterate through each process
@@ -28,18 +32,18 @@ func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) {
 			// If remaining time for process i is greater than 0
 			if remainingTime[i] > 0 {
 				// Execute the process for the time quantum or the remaining time, whichever is smaller
-				if remainingTime[i] <= timeQuantum {
-					currentTime += remainingTime[i]
-					completionTime[i] = currentTime
-					remainingTime[i] = 0
-				} else {
-					currentTime += timeQuantum
-					remainingTime[i] -= timeQuantum
-				}
+				executionTime := min(timeQuantum, remainingTime[i])
+				currentTime += executionTime
+				remainingTime[i] -= executionTime
+
+				// Update Gantt chart
+				ganttSlice := TimeSlice{PID: processID[i], Start: currentTime - executionTime, Stop: currentTime}
+				gantt = append(gantt, ganttSlice)
 
 				// Check if the process is completed
 				if remainingTime[i] == 0 {
 					totalCompleted++
+					completionTime[i] = currentTime
 					turnaroundTime[i] = completionTime[i] - arrivalTime[i]
 					waitingTime[i] = turnaroundTime[i] - burstTime[i]
 				}
@@ -66,4 +70,15 @@ func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) {
 
 	fmt.Printf("Average Waiting Time: %.2f\n", avgWaitingTime)
 	fmt.Printf("Average Turnaround Time: %.2f\n", avgTurnaroundTime)
+
+	// Print Gantt chart
+	outputGantt(os.Stdout, gantt)
+}
+
+// Helper function to find minimum of two integers
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
 }
