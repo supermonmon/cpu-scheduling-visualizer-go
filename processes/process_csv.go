@@ -10,6 +10,7 @@ import (
 func ProcessCSVData(reader *csv.Reader) ([]string, []int, []int, []int, int, error) {
 	var processID []string
 	var arrivalTime, burstTime, priorityLevel []int
+	var timeQuantumValue int
 
 	records, err := reader.ReadAll()
 	if err != nil {
@@ -17,13 +18,13 @@ func ProcessCSVData(reader *csv.Reader) ([]string, []int, []int, []int, int, err
 	}
 
 	// Extract time quantum (assuming it's the last column)
-	timeQuantumValue, err := strconv.Atoi(records[0][len(records[0])-1])
+	timeQuantumValue, err = strconv.Atoi(records[0][len(records[0])-1])
 	if err != nil {
 		return nil, nil, nil, nil, 0, fmt.Errorf("error converting time quantum (%s) to integer: %v", records[0][len(records[0])-1], err)
 	}
 
-	// Loop through records, skipping the header (already used for time quantum)
-	for _, record := range records[1:] {
+	// Loop through records, starting from index 0 to include the first process
+	for _, record := range records {
 		processID = append(processID, record[0])
 		arrivalTimeValue, err := strconv.Atoi(record[1])
 		if err != nil {
