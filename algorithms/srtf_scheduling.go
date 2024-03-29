@@ -7,7 +7,8 @@ import (
 
 // SRTF implements the Shortest Remaining Time First (SRTF) scheduling algorithm with preemptive execution
 func SRTF(processID []string, arrivalTime, burstTime []int) {
-	fmt.Println("SRTF Scheduling Results (Preemptive):")
+	fmt.Println("+-----------------------------------------------------------------------------+")
+	fmt.Println("\n\033[48;5;24;38;5;15m⚙️  Shortest Remaining Time First Scheduling \033[0m\n")
 
 	type SRTFData struct {
 		pid         string
@@ -101,9 +102,9 @@ func SRTF(processID []string, arrivalTime, burstTime []int) {
 	avgWaitingTime := float64(totalWT) / float64(len(processID))
 	avgTurnAroundTime := float64(totalTAT) / float64(len(processID))
 
-	// Print average waiting time and turnaround time
-	fmt.Printf("Average Waiting Time: %.2f\n", avgWaitingTime)
-	fmt.Printf("Average Turnaround Time: %.2f\n", avgTurnAroundTime)
+	fmt.Printf("\nAverage Waiting Time: \033[20;5;35m%.2f\033[0m\n", avgWaitingTime)
+	fmt.Printf("Average Turnaround Time: \033[20;5;35m%.2f\033[0m\n", avgTurnAroundTime)
+	fmt.Printf("\n")
 
 	// Print Gantt chart using outputGantt function
 	outputGantt(os.Stdout, gantt)

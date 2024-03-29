@@ -6,7 +6,8 @@ import (
 )
 
 func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) {
-	fmt.Println("Round Robin Scheduling Results (Time Quantum:", timeQuantum, "):")
+	fmt.Println("+-----------------------------------------------------------------------------+")
+	fmt.Println("\n\033[48;5;24;38;5;15m⚙️  Round Robin Scheduling \033[0m\n")
 
 	// Variables to track completion time, waiting time, and turnaround time
 	var (
@@ -68,8 +69,9 @@ func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) {
 	avgWaitingTime := float64(totalWaitingTime) / float64(totalProcesses)
 	avgTurnaroundTime := float64(totalTurnaroundTime) / float64(totalProcesses)
 
-	fmt.Printf("Average Waiting Time: %.2f\n", avgWaitingTime)
-	fmt.Printf("Average Turnaround Time: %.2f\n", avgTurnaroundTime)
+	fmt.Printf("\nAverage Waiting Time: \033[20;5;35m%.2f\033[0m\n", avgWaitingTime)
+	fmt.Printf("Average Turnaround Time: \033[20;5;35m%.2f\033[0m\n", avgTurnaroundTime)
+	fmt.Printf("\n")
 
 	// Print Gantt chart
 	outputGantt(os.Stdout, gantt)

@@ -67,8 +67,8 @@ func FCFS(processID []string, arrivalTime, burstTime []int) {
 	}
 	fmt.Println("+-------+------------+-----------+------------+--------------+--------------+")
 
-	fmt.Printf("\nAverage Waiting Time: %.2f\n", avgWaitingTime)
-	fmt.Printf("Average Turnaround Time: %.2f\n", avgTurnAroundTime)
+	fmt.Printf("\nAverage Waiting Time: \033[20;5;35m%.2f\033[0m\n", avgWaitingTime)
+	fmt.Printf("Average Turnaround Time: \033[20;5;35m%.2f\033[0m\n", avgTurnAroundTime)
 	fmt.Printf("\n")
 	// Print Gantt chart using outputGantt function
 	gantt := FCFSGantt(processID, burstTime)

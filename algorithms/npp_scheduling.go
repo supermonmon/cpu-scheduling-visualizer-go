@@ -7,7 +7,8 @@ import (
 
 // NPP implements the Priority scheduling algorithm (non-preemptive)
 func NPP(processID []string, arrivalTime, burstTime, priority []int) {
-	fmt.Println("Priority Scheduling (Non-Preemptive) Results:")
+	fmt.Println("+-----------------------------------------------------------------------------+")
+	fmt.Println("\n\033[48;5;24;38;5;15m⚙️  Priority Scheduling \033[0m\n")
 
 	type NPPData struct {
 		pid         string
@@ -84,9 +85,9 @@ func NPP(processID []string, arrivalTime, burstTime, priority []int) {
 	avgWaitingTime := float64(totalWT) / float64(len(processID))
 	avgTurnAroundTime := float64(totalTAT) / float64(len(processID))
 
-	// Print average waiting time and turnaround time
-	fmt.Printf("Average Waiting Time: %.2f\n", avgWaitingTime)
-	fmt.Printf("Average Turnaround Time: %.2f\n", avgTurnAroundTime)
+	fmt.Printf("\nAverage Waiting Time: \033[20;5;35m%.2f\033[0m\n", avgWaitingTime)
+	fmt.Printf("Average Turnaround Time: \033[20;5;35m%.2f\033[0m\n", avgTurnAroundTime)
+	fmt.Printf("\n")
 
 	// Print Gantt chart
 	outputGantt(os.Stdout, gantt)
