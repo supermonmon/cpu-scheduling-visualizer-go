@@ -45,15 +45,24 @@ func main() {
 
 		switch choice {
 		case "1":
-			algorithms.FCFS(processID, arrivalTime, burstTime)
+			// Call FCFS algorithm and capture the results
+			fcfsResult := algorithms.FCFS(processID, arrivalTime, burstTime)
+			algorithms.DisplayFCFS(fcfsResult)
 		case "2":
-			algorithms.SJF(processID, arrivalTime, burstTime)
+			sjfResult := algorithms.SJF(processID, arrivalTime, burstTime)
+			algorithms.DisplaySJF(sjfResult)
 		case "3":
-			algorithms.SRTF(processID, arrivalTime, burstTime)
+			srtfResult := algorithms.SRTF(processID, arrivalTime, burstTime)
+			algorithms.DisplaySRTF(srtfResult)
 		case "4":
-			algorithms.NPP(processID, arrivalTime, burstTime, priorityLevel)
+			nppResult := algorithms.NPP(processID, arrivalTime, burstTime, priorityLevel)
+			algorithms.DisplayNPP(nppResult)
 		case "5":
-			algorithms.RR(processID, arrivalTime, burstTime, timeQuantum)
+			rrResult := algorithms.RR(processID, arrivalTime, burstTime, timeQuantum)
+			algorithms.DisplayRR(rrResult)
+		case "6":
+			fcfsResult := algorithms.FCFS(processID, arrivalTime, burstTime)
+			fmt.Println(fcfsResult.CompletionTime)
 		case "Q", "q":
 			fmt.Println("Exiting...")
 			return

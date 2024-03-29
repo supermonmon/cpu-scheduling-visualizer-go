@@ -1,13 +1,6 @@
 package algorithms
 
-import (
-	"fmt"
-	"os"
-)
-
-func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) {
-	fmt.Println("+-----------------------------------------------------------------------------+")
-	fmt.Println("\n\033[48;5;24;38;5;15m⚙️  Round Robin Scheduling \033[0m\n")
+func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) RRResult {
 
 	// Variables to track completion time, waiting time, and turnaround time
 	var (
@@ -52,29 +45,29 @@ func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) {
 		}
 	}
 
-	// Print the table
-	fmt.Println("+-------+------------+-----------+------------+--------------+--------------+")
-	fmt.Println("| PID   | AT         | BT        | CT         | WT           | TAT          |")
-	fmt.Println("+-------+------------+-----------+------------+--------------+--------------+")
 	totalWaitingTime := 0
 	totalTurnaroundTime := 0
 	for i := 0; i < totalProcesses; i++ {
-		fmt.Printf("| %4s  | %10d | %9d | %10d | %12d | %12d |\n", processID[i], arrivalTime[i], burstTime[i], completionTime[i], waitingTime[i], turnaroundTime[i])
 		totalWaitingTime += waitingTime[i]
 		totalTurnaroundTime += turnaroundTime[i]
 	}
-	fmt.Println("+-------+------------+-----------+------------+--------------+--------------+")
 
 	// Calculate and display average waiting time, turnaround time, and completion time
 	avgWaitingTime := float64(totalWaitingTime) / float64(totalProcesses)
 	avgTurnaroundTime := float64(totalTurnaroundTime) / float64(totalProcesses)
 
-	fmt.Printf("\nAverage Waiting Time: \033[20;5;35m%.2f\033[0m\n", avgWaitingTime)
-	fmt.Printf("Average Turnaround Time: \033[20;5;35m%.2f\033[0m\n", avgTurnaroundTime)
-	fmt.Printf("\n")
-
-	// Print Gantt chart
-	outputGantt(os.Stdout, gantt)
+	return RRResult{
+		ProcessID:         processID,
+		ArrivalTime:       arrivalTime,
+		BurstTime:         burstTime,
+		TimeQuantum:       timeQuantum,
+		CompletionTime:    completionTime,
+		WaitingTime:       waitingTime,
+		TurnAroundTime:    turnaroundTime,
+		GanttChart:        gantt,
+		AvgWaitingTime:    avgWaitingTime,
+		AvgTurnAroundTime: avgTurnaroundTime,
+	}
 }
 
 // Helper function to find minimum of two integers

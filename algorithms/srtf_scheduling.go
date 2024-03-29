@@ -1,14 +1,6 @@
 package algorithms
 
-import (
-	"fmt"
-	"os"
-)
-
-// SRTF implements the Shortest Remaining Time First (SRTF) scheduling algorithm with preemptive execution
-func SRTF(processID []string, arrivalTime, burstTime []int) {
-	fmt.Println("+-----------------------------------------------------------------------------+")
-	fmt.Println("\n\033[48;5;24;38;5;15m⚙️  Shortest Remaining Time First Scheduling \033[0m\n")
+func SRTF(processID []string, arrivalTime, burstTime []int) SRTFResult {
 
 	type SRTFData struct {
 		pid         string
@@ -85,27 +77,26 @@ func SRTF(processID []string, arrivalTime, burstTime []int) {
 		}
 	}
 
-	// Print results similar to SRTF
-	fmt.Println("+-------+------------+-----------+------------+--------------+--------------+")
-	fmt.Println("| PID   | AT         | BT        | CT         | WT           | TAT          |")
-	fmt.Println("+-------+------------+-----------+------------+--------------+--------------+")
+	// Calculate average waiting time and turnaround time
 	totalWT := 0
 	totalTAT := 0
 	for i := range processID {
-		fmt.Printf("| %4s  | %10d | %9d | %10d | %12d | %12d |\n", processID[i], arrivalTime[i], burstTime[i], completionTime[i], waitingTime[i], turnAroundTime[i])
 		totalWT += waitingTime[i]
 		totalTAT += turnAroundTime[i]
 	}
-	fmt.Println("+-------+------------+-----------+------------+--------------+--------------+")
-
-	// Calculate average waiting time and turnaround time
 	avgWaitingTime := float64(totalWT) / float64(len(processID))
 	avgTurnAroundTime := float64(totalTAT) / float64(len(processID))
 
-	fmt.Printf("\nAverage Waiting Time: \033[20;5;35m%.2f\033[0m\n", avgWaitingTime)
-	fmt.Printf("Average Turnaround Time: \033[20;5;35m%.2f\033[0m\n", avgTurnAroundTime)
-	fmt.Printf("\n")
-
-	// Print Gantt chart using outputGantt function
-	outputGantt(os.Stdout, gantt)
+	// Return the result
+	return SRTFResult{
+		ProcessID:         processID,
+		ArrivalTime:       arrivalTime,
+		BurstTime:         burstTime,
+		CompletionTime:    completionTime,
+		WaitingTime:       waitingTime,
+		TurnAroundTime:    turnAroundTime,
+		GanttChart:        gantt,
+		AvgWaitingTime:    avgWaitingTime,
+		AvgTurnAroundTime: avgTurnAroundTime,
+	}
 }

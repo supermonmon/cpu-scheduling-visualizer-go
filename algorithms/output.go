@@ -15,7 +15,7 @@ func outputGantt(w io.Writer, gantt []TimeSlice) {
 		"P4": "\033[41m", // Red
 	}
 
-	_, _ = fmt.Fprintln(w, "Gantt schedule")
+	_, _ = fmt.Fprintln(w, "Gantt Chart")
 	_, _ = fmt.Fprint(w, " ")
 
 	maxLength := 0

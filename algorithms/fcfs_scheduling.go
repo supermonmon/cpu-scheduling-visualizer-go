@@ -1,16 +1,11 @@
 package algorithms
 
 import (
-	"fmt"
-	"os"
 	"sort"
 )
 
 // FCFS implements the First-Come, First-Served (FCFS) scheduling algorithm
-func FCFS(processID []string, arrivalTime, burstTime []int) {
-
-	fmt.Println("+-----------------------------------------------------------------------------+")
-	fmt.Println("\n\033[48;5;24;38;5;15m⚙️  First Come First Serve Scheduling \033[0m\n")
+func FCFS(processID []string, arrivalTime, burstTime []int) FCFSResult {
 
 	type FCFSData struct {
 		pid         string
@@ -59,18 +54,18 @@ func FCFS(processID []string, arrivalTime, burstTime []int) {
 	avgWaitingTime := float64(totalWaitingTime) / float64(len(processID))
 	avgTurnAroundTime := float64(totalTurnAroundTime) / float64(len(processID))
 
-	fmt.Println("+-------+------------+-----------+------------+--------------+--------------+")
-	fmt.Println("| PID  | AT         | BT         | CT         | WT           | TAT          |")
-	fmt.Println("+-------+------------+-----------+------------+--------------+--------------+")
-	for i := range processID {
-		fmt.Printf("| %4s | %10d | %10d | %10d | %12d | %12d |\n", processID[i], arrivalTime[i], burstTime[i], completionTime[i], waitingTime[i], turnAroundTime[i])
-	}
-	fmt.Println("+-------+------------+-----------+------------+--------------+--------------+")
-
-	fmt.Printf("\nAverage Waiting Time: \033[20;5;35m%.2f\033[0m\n", avgWaitingTime)
-	fmt.Printf("Average Turnaround Time: \033[20;5;35m%.2f\033[0m\n", avgTurnAroundTime)
-	fmt.Printf("\n")
 	// Print Gantt chart using outputGantt function
 	gantt := FCFSGantt(processID, burstTime)
-	outputGantt(os.Stdout, gantt)
+
+	return FCFSResult{
+		ProcessID:         processID,
+		ArrivalTime:       arrivalTime,
+		BurstTime:         burstTime,
+		CompletionTime:    completionTime,
+		WaitingTime:       waitingTime,
+		TurnAroundTime:    turnAroundTime,
+		AvgWaitingTime:    avgWaitingTime,
+		AvgTurnAroundTime: avgTurnAroundTime,
+		GanttChart:        gantt,
+	}
 }
