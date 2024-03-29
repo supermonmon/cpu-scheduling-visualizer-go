@@ -8,7 +8,9 @@ import (
 
 // FCFS implements the First-Come, First-Served (FCFS) scheduling algorithm
 func FCFS(processID []string, arrivalTime, burstTime []int) {
-	fmt.Println("FCFS Scheduling Results:")
+
+	fmt.Println("+-----------------------------------------------------------------------------+")
+	fmt.Println("\n\033[48;5;24;38;5;15m⚙️  First Come First Serve Scheduling \033[0m\n")
 
 	type FCFSData struct {
 		pid         string
@@ -33,10 +35,6 @@ func FCFS(processID []string, arrivalTime, burstTime []int) {
 
 	var waitingTime, completionTime, turnAroundTime []int
 	var current int = 0 // Current time
-
-	// Print Gantt chart using outputGantt function
-	gantt := FCFSGantt(processID, burstTime)
-	outputGantt(os.Stdout, gantt)
 
 	for i := range processID {
 		// Handle processes that arrive after current time
@@ -68,6 +66,11 @@ func FCFS(processID []string, arrivalTime, burstTime []int) {
 		fmt.Printf("| %4s | %10d | %10d | %10d | %12d | %12d |\n", processID[i], arrivalTime[i], burstTime[i], completionTime[i], waitingTime[i], turnAroundTime[i])
 	}
 	fmt.Println("+-------+------------+-----------+------------+--------------+--------------+")
-	fmt.Printf("Average Waiting Time: %.2f\n", avgWaitingTime)
+
+	fmt.Printf("\nAverage Waiting Time: %.2f\n", avgWaitingTime)
 	fmt.Printf("Average Turnaround Time: %.2f\n", avgTurnAroundTime)
+	fmt.Printf("\n")
+	// Print Gantt chart using outputGantt function
+	gantt := FCFSGantt(processID, burstTime)
+	outputGantt(os.Stdout, gantt)
 }

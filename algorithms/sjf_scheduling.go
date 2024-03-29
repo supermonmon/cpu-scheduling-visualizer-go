@@ -8,7 +8,8 @@ import (
 
 // SJF implements the Shortest Job First (SJF) scheduling algorithm with non-preemptive execution
 func SJF(processID []string, arrivalTime, burstTime []int) {
-	fmt.Println("SJF Scheduling Results (Non-preemptive):")
+	fmt.Println("+-----------------------------------------------------------------------------+")
+	fmt.Println("\n\n⚙️  Shortest Job First Scheduling\n")
 
 	type SJFData struct {
 		pid         string
@@ -87,8 +88,9 @@ func SJF(processID []string, arrivalTime, burstTime []int) {
 		fmt.Printf("| %4s | %10d | %10d | %10d | %12d | %12d |\n", processID[i], arrivalTime[i], burstTime[i], completionTime[i], waitingTime[i], turnAroundTime[i])
 	}
 	fmt.Println("+-------+------------+-----------+------------+--------------+--------------+")
-	fmt.Printf("Average Waiting Time: %.2f\n", avgWaitingTime)
+	fmt.Printf("\nAverage Waiting Time: %.2f\n", avgWaitingTime)
 	fmt.Printf("Average Turnaround Time: %.2f\n", avgTurnAroundTime)
+	fmt.Printf("\n")
 
 	// Print Gantt chart using outputGantt function
 	gantt := SJFGantt(processID, completionTime)
