@@ -21,6 +21,8 @@ func DisplayMenu() {
 	fmt.Print("\n")
 	fmt.Println("\x1b[40m\x1b[34m 5. Round Robin \x1b[0m")
 	fmt.Print("\n")
+	fmt.Println("\x1b[40m\x1b[34m 6. Compare All Algorithms \x1b[0m")
+	fmt.Print("\n")
 
 	fmt.Println("\n\x1b[47m Press 'Q' to exit \x1b[0m")
 	fmt.Print("\n")

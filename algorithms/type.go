@@ -1,6 +1,5 @@
 package algorithms
 
-// Structure to represent a time slice in the Gantt chart
 type TimeSlice struct {
 	PID   string
 	Start int
@@ -65,4 +64,9 @@ type RRResult struct {
 	GanttChart        []TimeSlice
 	AvgWaitingTime    float64
 	AvgTurnAroundTime float64
+}
+
+type SchedulingResult struct {
+	AvgTurnAroundTime float64
+	AvgWaitingTime    float64
 }

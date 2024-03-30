@@ -6,7 +6,6 @@ import (
 	"strings"
 )
 
-// Function to print the Gantt chart with improved formatting and color-coding
 func outputGantt(w io.Writer, gantt []TimeSlice) {
 	var colorMap = map[string]string{
 		"P1": "\033[44m", // Blue

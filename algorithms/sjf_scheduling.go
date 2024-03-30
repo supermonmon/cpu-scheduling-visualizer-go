@@ -80,6 +80,9 @@ func SJF(processID []string, arrivalTime, burstTime []int) SJFResult {
 	gantt := SJFGantt(processID, completionTime)
 
 	return SJFResult{
+		ProcessID:         processID,
+		ArrivalTime:       arrivalTime,
+		BurstTime:         burstTime,
 		CompletionTime:    completionTime,
 		WaitingTime:       waitingTime,
 		TurnAroundTime:    turnAroundTime,
@@ -87,4 +90,15 @@ func SJF(processID []string, arrivalTime, burstTime []int) SJFResult {
 		AvgTurnAroundTime: avgTurnAroundTime,
 		GanttChart:        gantt,
 	}
+}
+
+func SJFGantt(processID []string, completionTime []int) []TimeSlice {
+	gantt := make([]TimeSlice, len(processID))
+	var prevCompletionTime int = 0
+	for i := range processID {
+		gantt[i] = TimeSlice{PID: processID[i], Start: prevCompletionTime}
+		prevCompletionTime = completionTime[i] // Update start time for next process based on previous completion
+		gantt[i].Stop = prevCompletionTime
+	}
+	return gantt
 }
