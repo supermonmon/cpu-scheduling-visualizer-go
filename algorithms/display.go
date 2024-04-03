@@ -86,6 +86,7 @@ func DisplaySRTF(result SRTFResult) {
 
 	fmt.Printf("\nAverage Waiting Time: \033[20;5;35m%.2f\033[0m\n", result.AvgWaitingTime)
 	fmt.Printf("Average Turnaround Time: \033[20;5;35m%.2f\033[0m\n", result.AvgTurnAroundTime)
+	fmt.Printf("CPU Utilization: \033[20;5;35m%.2f\033[0m\n", result.CPUUtilization)
 	fmt.Printf("\n")
 
 	outputGantt(os.Stdout, result.GanttChart)
@@ -114,6 +115,7 @@ func DisplayNPP(result NPPResult) {
 
 	fmt.Printf("\nAverage Waiting Time: \033[20;5;35m%.2f\033[0m\n", avgWaitingTime)
 	fmt.Printf("Average Turnaround Time: \033[20;5;35m%.2f\033[0m\n", avgTurnAroundTime)
+	fmt.Printf("CPU Utilization: \033[20;5;35m%.2f\033[0m\n", result.CPUUtilization)
 	fmt.Printf("\n")
 
 	// Print Gantt chart
@@ -144,6 +146,7 @@ func DisplayRR(result RRResult) {
 
 	fmt.Printf("\nAverage Waiting Time: \033[20;5;35m%.2f\033[0m\n", avgWaitingTime)
 	fmt.Printf("Average Turnaround Time: \033[20;5;35m%.2f\033[0m\n", avgTurnAroundTime)
+	fmt.Printf("CPU Utilization: \033[20;5;35m%.2f\033[0m\n", result.CPUUtilization)
 	fmt.Printf("\n")
 
 	// Print Gantt chart

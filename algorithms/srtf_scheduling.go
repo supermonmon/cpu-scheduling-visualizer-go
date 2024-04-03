@@ -10,6 +10,11 @@ func SRTF(processID []string, arrivalTime, burstTime []int) SRTFResult {
 		completed   bool
 	}
 
+	var totalTime int
+	for _, bt := range burstTime {
+		totalTime += bt
+	}
+
 	// Create a data structure to store process information with burst time, remaining burst time, and completion flag
 	SRTFDataSlice := make([]SRTFData, len(processID))
 	for i := range processID {
@@ -86,6 +91,7 @@ func SRTF(processID []string, arrivalTime, burstTime []int) SRTFResult {
 	}
 	avgWaitingTime := float64(totalWT) / float64(len(processID))
 	avgTurnAroundTime := float64(totalTAT) / float64(len(processID))
+	cpuUtilization := float64(totalTime) / float64(currentTime) * 100
 
 	// Return the result
 	return SRTFResult{
@@ -98,5 +104,6 @@ func SRTF(processID []string, arrivalTime, burstTime []int) SRTFResult {
 		GanttChart:        gantt,
 		AvgWaitingTime:    avgWaitingTime,
 		AvgTurnAroundTime: avgTurnAroundTime,
+		CPUUtilization:    cpuUtilization,
 	}
 }

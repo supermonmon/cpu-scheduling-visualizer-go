@@ -13,6 +13,11 @@ func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) RRRes
 		totalCompleted int // Track the number of completed processes
 	)
 
+	var totalTime int
+	for _, bt := range burstTime {
+		totalTime += bt
+	}
+
 	// Initialize remainingTime array with burstTime
 	copy(remainingTime, burstTime)
 
@@ -55,6 +60,7 @@ func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) RRRes
 	// Calculate and display average waiting time, turnaround time, and completion time
 	avgWaitingTime := float64(totalWaitingTime) / float64(totalProcesses)
 	avgTurnaroundTime := float64(totalTurnaroundTime) / float64(totalProcesses)
+	cpuUtilization := float64(totalTime) / float64(currentTime) * 100
 
 	return RRResult{
 		ProcessID:         processID,
@@ -67,6 +73,7 @@ func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) RRRes
 		GanttChart:        gantt,
 		AvgWaitingTime:    avgWaitingTime,
 		AvgTurnAroundTime: avgTurnaroundTime,
+		CPUUtilization:    cpuUtilization,
 	}
 }
 

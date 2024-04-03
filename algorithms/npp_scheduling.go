@@ -9,6 +9,11 @@ func NPP(processID []string, arrivalTime, burstTime, priority []int) NPPResult {
 		completed   bool
 	}
 
+	var totalTime int
+	for _, bt := range burstTime {
+		totalTime += bt
+	}
+
 	// Create a data structure to store process information with burst time, priority, and completion flag
 	NPPDataSlice := make([]NPPData, len(processID))
 	for i := range processID {
@@ -68,6 +73,7 @@ func NPP(processID []string, arrivalTime, burstTime, priority []int) NPPResult {
 	}
 	avgWaitingTime := float64(totalWT) / float64(len(processID))
 	avgTurnAroundTime := float64(totalTAT) / float64(len(processID))
+	cpuUtilization := float64(totalTime) / float64(currentTime) * 100
 
 	// Return the result
 	return NPPResult{
@@ -81,5 +87,6 @@ func NPP(processID []string, arrivalTime, burstTime, priority []int) NPPResult {
 		GanttChart:        gantt,
 		AvgWaitingTime:    avgWaitingTime,
 		AvgTurnAroundTime: avgTurnAroundTime,
+		CPUUtilization:    cpuUtilization,
 	}
 }

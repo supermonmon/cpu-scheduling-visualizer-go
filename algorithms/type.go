@@ -41,6 +41,7 @@ type SRTFResult struct {
 	GanttChart        []TimeSlice
 	AvgWaitingTime    float64
 	AvgTurnAroundTime float64
+	CPUUtilization    float64
 }
 type NPPResult struct {
 	ProcessID         []string
@@ -53,6 +54,7 @@ type NPPResult struct {
 	GanttChart        []TimeSlice
 	AvgWaitingTime    float64
 	AvgTurnAroundTime float64
+	CPUUtilization    float64
 }
 
 type RRResult struct {
@@ -66,6 +68,7 @@ type RRResult struct {
 	GanttChart        []TimeSlice
 	AvgWaitingTime    float64
 	AvgTurnAroundTime float64
+	CPUUtilization    float64
 }
 
 type SchedulingResult struct {
