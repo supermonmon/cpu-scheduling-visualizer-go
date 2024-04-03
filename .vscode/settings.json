@@ -1,4 +1,7 @@
 {
     "editor.fontLigatures": false,
-    "editor.fontSize": 14
+    "editor.fontSize": 14,
+    "cSpell.words": [
+        "FCFS"
+    ]
 }

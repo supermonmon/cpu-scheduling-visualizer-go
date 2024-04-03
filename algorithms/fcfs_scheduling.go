@@ -13,6 +13,11 @@ func FCFS(processID []string, arrivalTime, burstTime []int) FCFSResult {
 		burstTime   int
 	}
 
+	var totalTime int
+	for _, bt := range burstTime {
+		totalTime += bt
+	}
+
 	FCFSDataSlice := make([]FCFSData, len(processID))
 	for i := range processID {
 		FCFSDataSlice[i] = FCFSData{processID[i], arrivalTime[i], burstTime[i]}
@@ -53,6 +58,7 @@ func FCFS(processID []string, arrivalTime, burstTime []int) FCFSResult {
 	}
 	avgWaitingTime := float64(totalWaitingTime) / float64(len(processID))
 	avgTurnAroundTime := float64(totalTurnAroundTime) / float64(len(processID))
+	cpuUtilization := float64(totalTime) / float64(current) * 100
 
 	// Print Gantt chart using outputGantt function
 	gantt := FCFSGantt(processID, burstTime)
@@ -67,6 +73,7 @@ func FCFS(processID []string, arrivalTime, burstTime []int) FCFSResult {
 		AvgWaitingTime:    avgWaitingTime,
 		AvgTurnAroundTime: avgTurnAroundTime,
 		GanttChart:        gantt,
+		CPUUtilization:    cpuUtilization,
 	}
 }
 
