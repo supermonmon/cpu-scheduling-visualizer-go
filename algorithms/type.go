@@ -28,6 +28,7 @@ type SJFResult struct {
 	AvgWaitingTime    float64
 	AvgTurnAroundTime float64
 	GanttChart        []TimeSlice
+	CPUUtilization    float64
 }
 
 type SRTFResult struct {

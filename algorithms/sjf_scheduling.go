@@ -13,6 +13,11 @@ func SJF(processID []string, arrivalTime, burstTime []int) SJFResult {
 		burstTime   int
 	}
 
+	var totalTime int
+	for _, bt := range burstTime {
+		totalTime += bt
+	}
+
 	SJFDataSlice := make([]SJFData, len(processID))
 	for i := range processID {
 		SJFDataSlice[i] = SJFData{processID[i], arrivalTime[i], burstTime[i]}
@@ -75,6 +80,7 @@ func SJF(processID []string, arrivalTime, burstTime []int) SJFResult {
 	}
 	avgWaitingTime := float64(totalWaitingTime) / float64(len(processID))
 	avgTurnAroundTime := float64(totalTurnAroundTime) / float64(len(processID))
+	cpuUtilization := float64(totalTime) / float64(currentTime) * 100
 
 	// Print Gantt chart using outputGantt function
 	gantt := SJFGantt(processID, completionTime)
@@ -89,6 +95,7 @@ func SJF(processID []string, arrivalTime, burstTime []int) SJFResult {
 		AvgWaitingTime:    avgWaitingTime,
 		AvgTurnAroundTime: avgTurnAroundTime,
 		GanttChart:        gantt,
+		CPUUtilization:    cpuUtilization,
 	}
 }
 
