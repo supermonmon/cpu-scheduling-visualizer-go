@@ -27,10 +27,10 @@ func outputGantt(w io.Writer, gantt []TimeSlice) {
 	format := strings.Repeat(" ", maxLength+2) + "%v  "
 	for _, ts := range gantt {
 		color := colorMap[ts.PID]
-		if color == "" { // Wrap around colors for more processes
+		if color == "" {
 			color = colorMap["P"+fmt.Sprintf("%d", (int(ts.PID[1])-48)%4+1)] // Use modulo 4 for Blue-Green-Yellow-Red cycle
 		}
-		_, _ = fmt.Fprintf(w, color+format+"\033[0m", ts.PID) // Apply color and reset
+		_, _ = fmt.Fprintf(w, color+format+"\033[0m", ts.PID)
 	}
 	_, _ = fmt.Fprintln(w)
 

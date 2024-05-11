@@ -84,7 +84,7 @@ func SJF(processID []string, arrivalTime, burstTime []int) Result {
 		Algorithm:         "SJF",
 		ProcessID:         processID,
 		ArrivalTime:       arrivalTime,
-		BurstTime:         burstTime, // Use original burstTime here
+		BurstTime:         burstTime, 
 		CompletionTime:    completionTime,
 		WaitingTime:       waitingTime,
 		TurnAroundTime:    turnAroundTime,

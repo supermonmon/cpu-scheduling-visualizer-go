@@ -11,7 +11,7 @@ func Display(result Result) {
 	fmt.Println("+-----------------------------------------------------------------------------+")
 	fmt.Printf("\n\033[48;5;24;38;5;15m⚙️  %s Scheduling \033[0m\n", result.Algorithm)
 	fmt.Print("\n")
-
+	
 	if result.Algorithm == "NPP"{
 		fmt.Println("+-------+------------+-----------+-----------+------------+--------------+--------------+")
 		fmt.Println("| PID   | AT         | BT        | PL        | CT         | WT           | TAT          |")

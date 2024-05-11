@@ -1,10 +1,7 @@
 package algorithms
 
-// Import necessary packages
-
-// Define the SRTF function
 func SRTF(processID []string, arrivalTime, burstTime []int) Result {
-	// Initialize variables
+
 	var totalTime int
 	for _, bt := range burstTime {
 		totalTime += bt
@@ -77,7 +74,6 @@ func SRTF(processID []string, arrivalTime, burstTime []int) Result {
 		}
 	}
 
-	// Calculate total waiting time and total turnaround time
 	totalWT := 0
 	totalTAT := 0
 	for i := range processID {
@@ -85,12 +81,10 @@ func SRTF(processID []string, arrivalTime, burstTime []int) Result {
 		totalTAT += turnAroundTime[i]
 	}
 
-	// Calculate average waiting time, average turnaround time, and CPU utilization
 	avgWaitingTime := float64(totalWT) / float64(len(processID))
 	avgTurnAroundTime := float64(totalTAT) / float64(len(processID))
 	cpuUtilization := float64(totalTime) / float64(currentTime) * 100
 
-	// Create and return the result
 	return Result{
 		Algorithm:         "SRTF",
 		ProcessID:         processID,
