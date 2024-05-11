@@ -45,7 +45,6 @@ func main() {
 
 		switch choice {
 		case "1":
-			// Call FCFS algorithm and capture the results
 			fcfsResult := algorithms.FCFS(processID, arrivalTime, burstTime)
 			algorithms.Display(fcfsResult)
 		case "2":
@@ -80,7 +79,6 @@ func main() {
 				{"RR", rrResult.AvgWaitingTime, rrResult.AvgTurnAroundTime},
 			}
 
-			// Find highest and lowest AWT and ATT
 			highestAWT := algorithms[0].avgWT
 			lowestAWT := algorithms[0].avgWT
 			highestATT := algorithms[0].avgTAT
@@ -101,7 +99,6 @@ func main() {
 				}
 			}
 
-			// Print results with ANSI color highlighting
 			fmt.Println("+-----------------------------------------------------------------------------+")
 
 			fmt.Println("\n\033[48;5;24;38;5;15m Scheduling Algorithm Comparison \033[0m")
@@ -146,7 +143,6 @@ func main() {
 				fmt.Printf("  * %s: %s%.2f\033[0m\n", algo.name, color, algo.avgTAT)
 			}
 
-			// Identify and print the best overall algorithm (heuristic)
 			bestOverall := ""
 			for _, algo := range algorithms {
 				if algo.avgWT == lowestAWT && algo.avgTAT == lowestATT {

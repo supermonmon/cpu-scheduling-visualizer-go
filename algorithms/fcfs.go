@@ -6,12 +6,6 @@ import (
 
 func FCFS(processID []string, arrivalTime, burstTime []int) Result {
 
-	type FCFSData struct {
-		pid         string
-		arrivalTime int
-		burstTime   int
-	}
-
 	var totalTime int
 	for _, bt := range burstTime {
 		totalTime += bt
@@ -46,7 +40,6 @@ func FCFS(processID []string, arrivalTime, burstTime []int) Result {
 		turnAroundTime = append(turnAroundTime, completionTime[i]-arrivalTime[i])
 	}
 
-	// Calculate average waiting time and turnaround time
 	totalWaitingTime := 0
 	totalTurnAroundTime := 0
 	for _, wt := range waitingTime {
@@ -59,7 +52,6 @@ func FCFS(processID []string, arrivalTime, burstTime []int) Result {
 	avgTurnAroundTime := float64(totalTurnAroundTime) / float64(len(processID))
 	cpuUtilization := float64(totalTime) / float64(current) * 100
 
-	// Print Gantt chart using outputGantt function
 	gantt := FCFSGantt(processID, burstTime)
 
 	return Result{

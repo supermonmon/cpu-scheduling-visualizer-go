@@ -1,13 +1,6 @@
 package algorithms
 
 func NPP(processID []string, arrivalTime, burstTime, priority []int) Result {
-	type NPPData struct {
-		pid         string
-		arrivalTime int
-		burstTime   int
-		priority    int
-		completed   bool
-	}
 
 	var totalTime int
 	for _, bt := range burstTime {

@@ -4,14 +4,7 @@ import (
 	"sort"
 )
 
-// SJF implements the Shortest Job First (SJF) scheduling algorithm with non-preemptive execution
 func SJF(processID []string, arrivalTime, burstTime []int) Result{
-
-	type SJFData struct {
-		pid         string
-		arrivalTime int
-		burstTime   int
-	}
 
 	var totalTime int
 	for _, bt := range burstTime {
@@ -101,7 +94,7 @@ func SJFGantt(processID []string, completionTime []int) []TimeSlice {
 	var prevCompletionTime int = 0
 	for i := range processID {
 		gantt[i] = TimeSlice{PID: processID[i], Start: prevCompletionTime}
-		prevCompletionTime = completionTime[i] // Update start time for next process based on previous completion
+		prevCompletionTime = completionTime[i]
 		gantt[i].Stop = prevCompletionTime
 	}
 	return gantt
