@@ -6,7 +6,6 @@ import (
 	"strconv"
 )
 
-// Function to process CSV data and extract information
 func ProcessCSVData(reader *csv.Reader) ([]string, []int, []int, []int, int, error) {
 	var processID []string
 	var arrivalTime, burstTime, priorityLevel []int

@@ -4,7 +4,10 @@ import (
 	"sort"
 )
 
-func SJF(processID []string, arrivalTime, burstTime []int) Result{
+func SJF(processID []string, arrivalTime, burstTime []int) Result {
+	// Make a copy of the burst time slice
+	modifiableBurstTime := make([]int, len(burstTime))
+	copy(modifiableBurstTime, burstTime)
 
 	var totalTime int
 	for _, bt := range burstTime {
@@ -25,18 +28,17 @@ func SJF(processID []string, arrivalTime, burstTime []int) Result{
 	for i := range SJFDataSlice {
 		processID[i] = SJFDataSlice[i].pid
 		arrivalTime[i] = SJFDataSlice[i].arrivalTime
-		burstTime[i] = SJFDataSlice[i].burstTime
 	}
 
 	var waitingTime, completionTime, turnAroundTime []int
-	var currentProcess int = -1              
-	var currentBurst, currentTime int = 0, 0 
+	var currentProcess int = -1
+	var currentBurst, currentTime int = 0, 0
 
 	for i := range processID {
 		// Find the first available process (not yet completed) with the lowest burst time
 		shortestJob := -1
 		for j := 0; j < len(processID); j++ {
-			if arrivalTime[j] <= currentTime && burstTime[j] > 0 && (shortestJob == -1 || burstTime[j] < burstTime[shortestJob]) {
+			if arrivalTime[j] <= currentTime && modifiableBurstTime[j] > 0 && (shortestJob == -1 || modifiableBurstTime[j] < modifiableBurstTime[shortestJob]) {
 				shortestJob = j
 			}
 		}
@@ -51,13 +53,17 @@ func SJF(processID []string, arrivalTime, burstTime []int) Result{
 		if currentProcess == -1 {
 			currentProcess = shortestJob
 		}
-		currentBurst = burstTime[shortestJob]
+		currentBurst = modifiableBurstTime[shortestJob]
 		currentTime += currentBurst
-		burstTime[shortestJob] = 0 // Mark completed process
+		modifiableBurstTime[shortestJob] = 0 // Mark completed process
 
+		// Calculate waiting time as the difference between current time and arrival time
 		waitingTime = append(waitingTime, currentTime-arrivalTime[shortestJob]-currentBurst)
+
+		// Update completion time and turn around time
 		completionTime = append(completionTime, currentTime)
 		turnAroundTime = append(turnAroundTime, completionTime[i]-arrivalTime[i])
+
 	}
 
 	totalWaitingTime := 0
@@ -75,10 +81,10 @@ func SJF(processID []string, arrivalTime, burstTime []int) Result{
 	gantt := SJFGantt(processID, completionTime)
 
 	return Result{
-		Algorithm:		   "SJF",
+		Algorithm:         "SJF",
 		ProcessID:         processID,
 		ArrivalTime:       arrivalTime,
-		BurstTime:         burstTime,
+		BurstTime:         burstTime, // Use original burstTime here
 		CompletionTime:    completionTime,
 		WaitingTime:       waitingTime,
 		TurnAroundTime:    turnAroundTime,
