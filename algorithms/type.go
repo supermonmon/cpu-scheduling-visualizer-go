@@ -18,10 +18,13 @@ type FCFSResult struct {
 	CPUUtilization    float64
 }
 
-type SJFResult struct {
+type Result struct {
+	Algorithm         string
 	ProcessID         []string
 	ArrivalTime       []int
 	BurstTime         []int
+	Priority          []int
+	TimeQuantum       int
 	CompletionTime    []int
 	WaitingTime       []int
 	TurnAroundTime    []int

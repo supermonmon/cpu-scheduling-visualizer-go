@@ -1,6 +1,6 @@
 package algorithms
 
-func SRTF(processID []string, arrivalTime, burstTime []int) SRTFResult {
+func SRTF(processID []string, arrivalTime, burstTime []int) Result {
 
 	type SRTFData struct {
 		pid         string
@@ -94,7 +94,8 @@ func SRTF(processID []string, arrivalTime, burstTime []int) SRTFResult {
 	cpuUtilization := float64(totalTime) / float64(currentTime) * 100
 
 	// Return the result
-	return SRTFResult{
+	return Result{
+		Algorithm:         "SRTF",
 		ProcessID:         processID,
 		ArrivalTime:       arrivalTime,
 		BurstTime:         burstTime,

@@ -47,19 +47,19 @@ func main() {
 		case "1":
 			// Call FCFS algorithm and capture the results
 			fcfsResult := algorithms.FCFS(processID, arrivalTime, burstTime)
-			algorithms.DisplayFCFS(fcfsResult)
+			algorithms.Display(fcfsResult)
 		case "2":
 			sjfResult := algorithms.SJF(processID, arrivalTime, burstTime)
-			algorithms.DisplaySJF(sjfResult)
+			algorithms.Display(sjfResult)
 		case "3":
 			srtfResult := algorithms.SRTF(processID, arrivalTime, burstTime)
-			algorithms.DisplaySRTF(srtfResult)
+			algorithms.Display(srtfResult)
 		case "4":
 			nppResult := algorithms.NPP(processID, arrivalTime, burstTime, priorityLevel)
-			algorithms.DisplayNPP(nppResult)
+			algorithms.Display(nppResult)
 		case "5":
 			rrResult := algorithms.RR(processID, arrivalTime, burstTime, timeQuantum)
-			algorithms.DisplayRR(rrResult)
+			algorithms.Display(rrResult)
 		case "6":
 			// Execute all algorithms and store results
 			srtfResult := algorithms.SRTF(processID, arrivalTime, burstTime)

@@ -1,6 +1,6 @@
 package algorithms
 
-func NPP(processID []string, arrivalTime, burstTime, priority []int) NPPResult {
+func NPP(processID []string, arrivalTime, burstTime, priority []int) Result {
 	type NPPData struct {
 		pid         string
 		arrivalTime int
@@ -76,7 +76,8 @@ func NPP(processID []string, arrivalTime, burstTime, priority []int) NPPResult {
 	cpuUtilization := float64(totalTime) / float64(currentTime) * 100
 
 	// Return the result
-	return NPPResult{
+	return Result{
+		Algorithm:         "NPP",
 		ProcessID:         processID,
 		ArrivalTime:       arrivalTime,
 		BurstTime:         burstTime,

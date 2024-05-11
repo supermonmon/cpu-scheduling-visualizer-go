@@ -5,7 +5,7 @@ import (
 )
 
 // SJF implements the Shortest Job First (SJF) scheduling algorithm with non-preemptive execution
-func SJF(processID []string, arrivalTime, burstTime []int) SJFResult {
+func SJF(processID []string, arrivalTime, burstTime []int) Result{
 
 	type SJFData struct {
 		pid         string
@@ -36,10 +36,9 @@ func SJF(processID []string, arrivalTime, burstTime []int) SJFResult {
 	}
 
 	var waitingTime, completionTime, turnAroundTime []int
-	var currentProcess int = -1              // Index of the currently executing process
-	var currentBurst, currentTime int = 0, 0 // Track current burst time and time
+	var currentProcess int = -1              
+	var currentBurst, currentTime int = 0, 0 
 
-	// SJF scheduling loop with non-preemption
 	for i := range processID {
 		// Find the first available process (not yet completed) with the lowest burst time
 		shortestJob := -1
@@ -63,13 +62,11 @@ func SJF(processID []string, arrivalTime, burstTime []int) SJFResult {
 		currentTime += currentBurst
 		burstTime[shortestJob] = 0 // Mark completed process
 
-		// Calculate waiting and turnaround times
 		waitingTime = append(waitingTime, currentTime-arrivalTime[shortestJob]-currentBurst)
 		completionTime = append(completionTime, currentTime)
 		turnAroundTime = append(turnAroundTime, completionTime[i]-arrivalTime[i])
 	}
 
-	// Calculate average waiting time and turnaround time
 	totalWaitingTime := 0
 	totalTurnAroundTime := 0
 	for _, wt := range waitingTime {
@@ -82,10 +79,10 @@ func SJF(processID []string, arrivalTime, burstTime []int) SJFResult {
 	avgTurnAroundTime := float64(totalTurnAroundTime) / float64(len(processID))
 	cpuUtilization := float64(totalTime) / float64(currentTime) * 100
 
-	// Print Gantt chart using outputGantt function
 	gantt := SJFGantt(processID, completionTime)
 
-	return SJFResult{
+	return Result{
+		Algorithm:		   "SJF",
 		ProcessID:         processID,
 		ArrivalTime:       arrivalTime,
 		BurstTime:         burstTime,

@@ -4,8 +4,7 @@ import (
 	"sort"
 )
 
-// FCFS implements the First-Come, First-Served (FCFS) scheduling algorithm
-func FCFS(processID []string, arrivalTime, burstTime []int) FCFSResult {
+func FCFS(processID []string, arrivalTime, burstTime []int) Result {
 
 	type FCFSData struct {
 		pid         string
@@ -63,7 +62,8 @@ func FCFS(processID []string, arrivalTime, burstTime []int) FCFSResult {
 	// Print Gantt chart using outputGantt function
 	gantt := FCFSGantt(processID, burstTime)
 
-	return FCFSResult{
+	return Result{
+		Algorithm:		   "FCFS",
 		ProcessID:         processID,
 		ArrivalTime:       arrivalTime,
 		BurstTime:         burstTime,
@@ -77,11 +77,11 @@ func FCFS(processID []string, arrivalTime, burstTime []int) FCFSResult {
 	}
 }
 
-func FCFSGantt(processID []string, burstTime []int) []TimeSlice { // Updated processID type
+func FCFSGantt(processID []string, burstTime []int) []TimeSlice {
 	gantt := make([]TimeSlice, len(processID))
 	var current int = 0
 	for i := range processID {
-		gantt[i] = TimeSlice{PID: processID[i], Start: current} // Use processID as string
+		gantt[i] = TimeSlice{PID: processID[i], Start: current} 
 		current += burstTime[i]
 		gantt[i].Stop = current
 	}

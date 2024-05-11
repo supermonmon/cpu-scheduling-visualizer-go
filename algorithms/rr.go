@@ -1,16 +1,17 @@
 package algorithms
 
-func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) RRResult {
+import "sort"
 
-	// Variables to track completion time, waiting time, and turnaround time
+func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) Result {
+
 	var (
 		completionTime = make([]int, len(processID))
 		waitingTime    = make([]int, len(processID))
 		turnaroundTime = make([]int, len(processID))
-		remainingTime  = make([]int, len(processID)) // Track remaining time for each process
-		currentTime    int                           // Track current time
+		remainingTime  = make([]int, len(processID))
+		currentTime    int
 		totalProcesses = len(processID)
-		totalCompleted int // Track the number of completed processes
+		totalCompleted int
 	)
 
 	var totalTime int
@@ -21,6 +22,26 @@ func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) RRRes
 	// Initialize remainingTime array with burstTime
 	copy(remainingTime, burstTime)
 
+	// Sort processes based on arrival time
+	type Process struct {
+		ID           string
+		ArrivalTime  int
+		BurstTime    int
+		RemainingTime int
+	}
+	var processes []Process
+	for i := 0; i < totalProcesses; i++ {
+		processes = append(processes, Process{
+			ID:           processID[i],
+			ArrivalTime:  arrivalTime[i],
+			BurstTime:    burstTime[i],
+			RemainingTime: burstTime[i],
+		})
+	}
+	sort.Slice(processes, func(i, j int) bool {
+		return processes[i].ArrivalTime < processes[j].ArrivalTime
+	})
+
 	// Initialize Gantt chart slices
 	var gantt []TimeSlice
 
@@ -28,19 +49,19 @@ func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) RRRes
 	for totalCompleted < totalProcesses {
 		// Iterate through each process
 		for i := 0; i < totalProcesses; i++ {
-			// If remaining time for process i is greater than 0
-			if remainingTime[i] > 0 {
+			// If remaining time for process i is greater than 0 and it has arrived
+			if processes[i].RemainingTime > 0 && processes[i].ArrivalTime <= currentTime {
 				// Execute the process for the time quantum or the remaining time, whichever is smaller
-				executionTime := min(timeQuantum, remainingTime[i])
+				executionTime := min(timeQuantum, processes[i].RemainingTime)
 				currentTime += executionTime
-				remainingTime[i] -= executionTime
+				processes[i].RemainingTime -= executionTime
 
 				// Update Gantt chart
-				ganttSlice := TimeSlice{PID: processID[i], Start: currentTime - executionTime, Stop: currentTime}
+				ganttSlice := TimeSlice{PID: processes[i].ID, Start: currentTime - executionTime, Stop: currentTime}
 				gantt = append(gantt, ganttSlice)
 
 				// Check if the process is completed
-				if remainingTime[i] == 0 {
+				if processes[i].RemainingTime == 0 {
 					totalCompleted++
 					completionTime[i] = currentTime
 					turnaroundTime[i] = completionTime[i] - arrivalTime[i]
@@ -57,12 +78,12 @@ func RR(processID []string, arrivalTime, burstTime []int, timeQuantum int) RRRes
 		totalTurnaroundTime += turnaroundTime[i]
 	}
 
-	// Calculate and display average waiting time, turnaround time, and completion time
 	avgWaitingTime := float64(totalWaitingTime) / float64(totalProcesses)
 	avgTurnaroundTime := float64(totalTurnaroundTime) / float64(totalProcesses)
 	cpuUtilization := float64(totalTime) / float64(currentTime) * 100
 
-	return RRResult{
+	return Result{
+		Algorithm:         "RR",
 		ProcessID:         processID,
 		ArrivalTime:       arrivalTime,
 		BurstTime:         burstTime,

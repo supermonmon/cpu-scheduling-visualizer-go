@@ -1,5 +1,5 @@
 Process ID,Arrival Time,Burst Time,Priority Level,Time Quantum
-P1,2,2,4,10
+P1,2,2,4,30
 P2,0,33,9,
 P3,2,45,0,
 P4,4,59,1,
